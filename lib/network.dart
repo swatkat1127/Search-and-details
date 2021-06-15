@@ -15,7 +15,5 @@ class NetworkHelper {
       print(response.statusCode);
       throw Exception('Failed to load data!');
     }
-
-
   }
 }

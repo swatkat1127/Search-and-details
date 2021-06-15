@@ -11,14 +11,10 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
             appBar: AppBar(
-                title: Text('Search and details'),
-               backgroundColor: Colors.blueGrey,
+              title: Text('Search and details'),
+              backgroundColor: Colors.blueGrey,
             ),
-            body: Center(
-                child: ListSearch()
-            )
-        )
-    );
+            body: Center(child: ListSearch())));
   }
 }
 
@@ -27,10 +23,8 @@ class ListSearch extends StatefulWidget {
 }
 
 class ListSearchState extends State<ListSearch> {
-
   TextEditingController _textController = TextEditingController();
   List<dynamic> mainDataList = [];
-
 
   List<dynamic> newDataList = [];
 
@@ -39,7 +33,6 @@ class ListSearchState extends State<ListSearch> {
     // TODO: implement initState
     super.initState();
     getMainDataList();
-
   }
 
   @override
@@ -64,22 +57,28 @@ class ListSearchState extends State<ListSearch> {
               children: newDataList.map((d) {
                 return ListTile(
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage(d['ImageUrl']), // no matter how big it is, it won't overflow
+                    backgroundImage: NetworkImage(d[
+                        'ImageUrl']), // no matter how big it is, it won't overflow
                   ),
                   title: Text(d['Color']),
                   subtitle: Text(d['QRCode']),
                   onTap: () {
-                    Navigator.push((context), MaterialPageRoute(builder: (context) => DetailsPage(
-                      ImageUrl: d['ImageUrl'],
-                      Option:   d['Option'],
-                      MRP:      d['MRP'],
-                      Color:    d['Color'],
-                      Brand:    d['Brand'],
-                      Gender:   d['Gender'],
-                      Description: d['Description'],
-
-                    ) ));
-                  },);
+                    Navigator.push(
+                        (context),
+                        MaterialPageRoute(
+                            builder: (context) => DetailsPage(
+                                  ImageUrl: d['ImageUrl'],
+                                  Option: d['Option'],
+                                  MRP: d['MRP'],
+                                  Color: d['Color'],
+                                  Brand: d['Brand'],
+                                  Gender: d['Gender'],
+                                  Description: d['Description'],
+                                  SubCategory: d['SubCategory'],
+                                  Category: d['Category'],
+                                )));
+                  },
+                );
               }).toList(),
             ),
           )
@@ -90,24 +89,26 @@ class ListSearchState extends State<ListSearch> {
 
   onItemChanged(String text) {
     setState(() {
-      newDataList = mainDataList.where((s) => s["QRCode"].toLowerCase().contains(text.toLowerCase())).toList();
+      newDataList = mainDataList
+          .where((s) => s["QRCode"].toLowerCase().contains(text.toLowerCase()))
+          .toList();
     });
   }
 
   void getMainDataList() async {
-    NetworkHelper np = NetworkHelper('https://debug.qart.fashion/api/product/GetProductsWithSizes?retailerCode=40984');
+    NetworkHelper np = NetworkHelper(
+        'https://debug.qart.fashion/api/product/GetProductsWithSizes?retailerCode=40984');
     var data;
     try {
       data = await np.getData();
     } catch (err) {
-      data = { 'Products': null};
+      data = {'Products': null};
     }
 
-      setState(() {
-        List<dynamic> results = data['Products'];
-        mainDataList = results;
-        newDataList = List.from(mainDataList);
-      });
+    setState(() {
+      List<dynamic> results = data['Products'];
+      mainDataList = results;
+      newDataList = List.from(mainDataList);
+    });
   }
-
 }
