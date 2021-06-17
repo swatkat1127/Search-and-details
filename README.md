@@ -2,9 +2,8 @@
 
 The app homepage is list of products which has search functionality. On click of a product its detail page opens.
 
-## Getting Started
 
-Highlights:
+### Highlights:
 - ListView widget for the user based on the info retrieved from the API
 - A search bar where the user can filter their listView
 - Ontap listener on listview item
