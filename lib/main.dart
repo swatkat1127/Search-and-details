@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qart_search/network.dart';
-import 'detailsPage.dart';
+import 'service/network.dart';
+import 'screen/detailsPage.dart';
 
 void main() => runApp(MyApp());
 
